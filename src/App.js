@@ -29,34 +29,29 @@ let calcWinner = (square) => {
   return null
 }
 
-export default function Board() {
-  const [square, setSquare] = useState(Array(9).fill(null))
-  const [player1, setPlayer1] = useState(true)
+function Board({player, square, onPlay}) {
   let winner = calcWinner(square)
   let status
 
   let handleClick = (num) => {
-    console.log(`calcWinner(square) true?`, calcWinner(square))
-
     if(square[num] || calcWinner(square)){
       return
     }
 
     let squareAnswer = square.slice();
 
-    if(player1){
+    if(player){
       squareAnswer[num] = "X"
     }
     else{
       squareAnswer[num] = "O"
     }
     
-    setSquare(squareAnswer)
-    setPlayer1(!player1)
+    onPlay(squareAnswer)
   }
 
   if(winner === null){
-    status = `Player ` + (player1 ? 'X' : 'O') + `'s turn`
+    status = `Player ` + (player ? 'X' : 'O') + `'s turn`
   }
   else if(winner){
     status = `The winner is ${winner}!`
@@ -84,7 +79,37 @@ export default function Board() {
         <Square value={square[8]} handleClick={() => handleClick(8)}/>
       </div>
       <br></br>
-      <button onClick={() => setSquare(Array(9).fill(null))}>Reset Board</button>
     </Fragment>
   );
 };
+
+
+export default function TurnList() {
+  const [player, setPlayer] = useState(true)
+  const [history, setHistory] = useState([Array(9).fill(null)])
+  let currSquare = history[history.length - 1]
+
+  function handlePlay(squareAnswer){
+    setHistory([...history, squareAnswer])
+    setPlayer(!player)
+  }
+
+  console.log(history)
+  return(
+    <Fragment>
+      <h1>Tic-Tac-Toe</h1>
+
+      <div className="game">
+        <div className="game-board">
+          <Board player={player} square={currSquare} onPlay={handlePlay} />
+        </div>
+
+        <div className="game-info">
+          <p>Turn List</p>
+          <ol></ol>
+        </div>
+        <button className='reset' onClick={() => setHistory([Array(9).fill(null)])}>Reset Board</button>
+      </div>
+    </Fragment>
+  )
+}

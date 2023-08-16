@@ -83,8 +83,15 @@ body {
 .game {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  width: 50%;
 }
 
 .game-info {
+  width: 50%;
   margin-left: 20px;
+}
+
+.reset {
+  align-content: center;
 }
