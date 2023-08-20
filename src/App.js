@@ -30,8 +30,8 @@ let calcWinner = (square) => {
 }
 
 function Board({player, square, onPlay}) {
-  let winner = calcWinner(square)
   let status
+  let winner = calcWinner(square)
 
   let handleClick = (num) => {
     if(square[num] || calcWinner(square)){
@@ -84,17 +84,46 @@ function Board({player, square, onPlay}) {
 };
 
 
-export default function TurnList() {
-  const [player, setPlayer] = useState(true)
+export default function Game() {
+  const [currentMove, setCurrentMove] = useState(0)
   const [history, setHistory] = useState([Array(9).fill(null)])
-  let currSquare = history[history.length - 1]
+  const [turn, setTurn] = useState([`X`])
+  let currSquare = history[currentMove]
+  let player = currentMove % 2 === 0
 
   function handlePlay(squareAnswer){
-    setHistory([...history, squareAnswer])
-    setPlayer(!player)
+    let nextHistory = [...history.slice(0, currentMove + 1), squareAnswer]
+    setHistory(nextHistory)
+    setCurrentMove(nextHistory.length - 1)
   }
 
-  console.log(history)
+  function jumpTo(nextMove){
+    setCurrentMove(nextMove)
+  }
+
+  let moves = history.map((squares, index) => {
+    let desc
+
+    if(index > 0){
+      desc = `Move ${index} is ${turn[index - 1]}`
+      if(player && turn.length === index){
+        setTurn([...turn.slice(0), 'X'])
+      }
+      else if(!player && turn.length === index){
+        setTurn([...turn.slice(0), 'O'])
+      }
+    }
+    else{
+      return
+    }
+    
+    return (
+      <li key={index}>
+        <button onClick={() => jumpTo(index)}>{desc}</button>
+      </li>
+    )
+  })
+
   return(
     <Fragment>
       <h1>Tic-Tac-Toe</h1>
@@ -106,9 +135,13 @@ export default function TurnList() {
 
         <div className="game-info">
           <p>Turn List</p>
-          <ol></ol>
+          <ol>{moves}</ol>
         </div>
-        <button className='reset' onClick={() => setHistory([Array(9).fill(null)])}>Reset Board</button>
+        <button className='reset' onClick={() => {
+            jumpTo(0)
+            setHistory([Array(9).fill(null)])
+          }
+        }>Reset Board</button>
       </div>
     </Fragment>
   )
