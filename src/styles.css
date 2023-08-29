@@ -1,42 +1,46 @@
 * {
   box-sizing: border-box;
+  border: 1px solid black;
 }
 
 body {
   font-family: sans-serif;
   margin: 20px;
-  padding: 0;
+  /* border: 2px solid orange; */
+  display: flex;
+  justify-content: center;
+  max-width: 1000px;
 }
 
 h1 {
   margin-top: 0;
   font-size: 22px;
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
 }
 
 h2 {
-  margin-top: 0;
   font-size: 20px;
+  width: 100%;
+  text-align: center;
 }
 
-h3 {
-  margin-top: 0;
+/* h3 {
   font-size: 18px;
 }
 
 h4 {
-  margin-top: 0;
   font-size: 16px;
 }
 
 h5 {
-  margin-top: 0;
   font-size: 14px;
 }
 
 h6 {
-  margin-top: 0;
   font-size: 12px;
-}
+} */
 
 code {
   font-size: 1.2em;
@@ -56,42 +60,116 @@ body {
   padding: 0;
 }
 
+p{
+  text-align: center;
+}
+
+button {
+  font-size: 14px;
+}
+
+#game-page {
+  display: flex; 
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  max-width: 1000px;
+  /* border: 2px solid green; */
+}
+
+.directions {
+  display:grid;
+  justify-items: center;
+  width: 80%;
+}
+
+.game {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 800px;
+  /* border: 2px solid yellow; */
+}
+
+.game-board {
+  display:flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  /* width: 180px; */
+  width: 30%;
+  /* border: 2px solid red; */
+  margin-top: 20px;
+  min-width: 125px;
+  min-height: 195px;
+  height: 220px;
+}
+
+.status {
+  margin-bottom: 20px;
+  width: 100%;
+  text-align: center;
+  /* border: 2px solid slateblue; */
+}
+
 .square {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   background: #fff;
   border: 1px solid #999;
   float: left;
-  font-size: 24px;
+  font-size: 150%;
   font-weight: bold;
   line-height: 34px;
-  height: 34px;
+  height: 36px;
   margin-right: -1px;
   margin-top: -1px;
-  padding: 0;
   text-align: center;
-  width: 34px;
+  width: 33.5%;
+  /* border: 2px solid lightcoral; */
+}
+
+.board-row {
+  /* display:flex;
+  flex-wrap: wrap; */
+  margin-bottom: -10px;
+  width: 70%;
 }
 
 .board-row:after {
   clear: both;
   content: '';
   display: table;
-}
-
-.status {
-  margin-bottom: 10px;
-}
-.game {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 50%;
-}
-
-.game-info {
-  width: 50%;
-  margin-left: 20px;
+  width: 102px;
 }
 
 .reset {
-  align-content: center;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.turn-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  width: 20%;
+  /* margin-left: 20px; */
+  margin-top: 20px;
+  min-width: 125px;
+  /* border: 2px hotpink solid; */
+}
+
+.turn-list div, .turn-list ol {
+  width: 100%;
+  text-align: center;
+}
+
+/* .turn-list div {
+  border: 2px solid peru;
+} */
+
+.turn-list ol {
+  margin-top: 15%;
+  /* border: 2px solid purple; */
 }
