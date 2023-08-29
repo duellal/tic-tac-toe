@@ -144,10 +144,10 @@ export default function Game() {
             The first player is known as X and the second is O. Players alternate placing Xs and Os on the game board until either oppent has three in a row or all nine squares are filled.
           </p>
           <p>
-            ** If you forget who's turn it is, just look above the board and we'll tell you!
+            X always goes first, and in the event that no one has three in a row, the stalemate is called a cat game.
           </p>
           <p>
-            X always goes first, and in the event that no one has three in a row, the stalemate is called a cat game.
+            If you forget who's turn it is, just look above the board and we'll tell you!
           </p>
         </div>
 

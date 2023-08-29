@@ -1,6 +1,6 @@
 * {
   box-sizing: border-box;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 body {
@@ -9,15 +9,14 @@ body {
   /* border: 2px solid orange; */
   display: flex;
   justify-content: center;
-  max-width: 1000px;
 }
 
 h1 {
-  margin-top: 0;
-  font-size: 22px;
+  font-size: 30px;
   width: 100%;
   text-align: center;
   margin-top: 10px;
+  padding-bottom: 15px;
 }
 
 h2 {
@@ -78,9 +77,16 @@ button {
 }
 
 .directions {
-  display:grid;
-  justify-items: center;
   width: 80%;
+  margin-bottom: 2%;
+  border: 2px dashed black;
+  padding-bottom: 1%;
+}
+
+.directions p {
+  padding: 0 5%;
+  text-align: justify;
+  text-align: center;
 }
 
 .game {
@@ -97,18 +103,21 @@ button {
   justify-content: center;
   flex-wrap: wrap;
   /* width: 180px; */
-  width: 30%;
+  width: 50%;
   /* border: 2px solid red; */
   margin-top: 20px;
-  min-width: 125px;
-  min-height: 195px;
-  height: 220px;
+  min-width: 210px;
+  min-height: 210px;
+  max-width: 300px;
+  max-height: 350px;
+  height: 500px;
 }
 
 .status {
   margin-bottom: 20px;
   width: 100%;
   text-align: center;
+  font-size: 18px;
   /* border: 2px solid slateblue; */
 }
 
@@ -116,13 +125,14 @@ button {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-content: center;
   background: #fff;
   border: 1px solid #999;
   float: left;
   font-size: 150%;
   font-weight: bold;
   line-height: 34px;
-  height: 36px;
+  height: 90%;
   margin-right: -1px;
   margin-top: -1px;
   text-align: center;
@@ -133,8 +143,10 @@ button {
 .board-row {
   /* display:flex;
   flex-wrap: wrap; */
-  margin-bottom: -10px;
+  margin-bottom: -50px;
   width: 70%;
+  height: 20%;
+  /* border: 2px solid saddlebrown; */
 }
 
 .board-row:after {
@@ -155,21 +167,28 @@ button {
   align-content: flex-start;
   width: 20%;
   /* margin-left: 20px; */
-  margin-top: 20px;
-  min-width: 125px;
+  margin-top: 12.5%;
+  min-width: 210px;
   /* border: 2px hotpink solid; */
 }
 
 .turn-list div, .turn-list ol {
   width: 100%;
   text-align: center;
+  display: flex;
+  align-content: center;
+  justify-content: center;
 }
 
-/* .turn-list div {
-  border: 2px solid peru;
-} */
+.turn-list div {
+  /* border: 2px solid peru; */
+}
 
 .turn-list ol {
+  width: 100%;
   margin-top: 15%;
+  margin-right: 10%;
   /* border: 2px solid purple; */
+  justify-content: center;
+  flex-wrap: wrap;
 }
