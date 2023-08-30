@@ -20,8 +20,11 @@ let calcWinner = (history, square) => {
 
   for(let i = 0; i < winLines.length; i++){
     let [a, b, c] = winLines[i]
+    console.log(`abc squares:`, `${a}: ${square[a]}, ${b}: ${square[b]}, ${c}: ${square[c]}`)
+    console.log(`winlines[i]:`, winLines[i])
 
     if(square[a] && square[a] === square[b] && square[b] === square[c]){
+      console.log(`in calcWinner:`, square[a])
       return square[a]
     }
     else if (history[9] && history[9].find(el => el === null) === undefined){
@@ -32,10 +35,29 @@ let calcWinner = (history, square) => {
   return null
 }
 
-function Board({history, player, square, onPlay}) {
+function Status({history, player, square}){
   let status
   let winner = calcWinner(history, square)
+  console.log(`Winner:`, winner)
 
+  if(winner === null){
+    status = `Player ` + (player ? 'X' : 'O') + `'s turn`
+  }
+  else if(winner){
+    if(winner === 'tie'){
+      status = `It's a Cat Game! (aka: a tie)`
+    }
+    else{
+      status = `The winner is ${winner}!`
+    }
+  }
+
+  return(
+    <div className="status">{status}</div>
+  )
+}
+
+function Board({history, player, square, onPlay}) {
   let handleClick = (num) => {
     if(square[num] || calcWinner(history, square)){
       return
@@ -53,22 +75,9 @@ function Board({history, player, square, onPlay}) {
     onPlay(squareAnswer)
   }
 
-  if(winner === null){
-    status = `Player ` + (player ? 'X' : 'O') + `'s turn`
-  }
-  else if(winner){
-    if(winner === 'tie'){
-      status = `It's a Cat Game! (aka: a tie)`
-    }
-    else{
-      status = `The winner is ${winner}!`
-    }
-  }
-
-
   return (
     <Fragment>
-        <div className="status">{status}</div>
+      <div className="board-div">
         <div className="board-row">
           <Square value={square[0]} handleClick={() => handleClick(0)} />
           <Square value={square[1]} handleClick={() => handleClick(1)}/>
@@ -84,7 +93,7 @@ function Board({history, player, square, onPlay}) {
           <Square value={square[7]} handleClick={() => handleClick(7)}/>
           <Square value={square[8]} handleClick={() => handleClick(8)}/>
         </div>
-        <br></br>
+      </div>
     </Fragment>
   );
 };
@@ -96,6 +105,7 @@ export default function Game() {
   const [turn, setTurn] = useState([`X`])
   let currSquare = history[currentMove]
   let player = currentMove % 2 === 0
+  let status
 
   function handlePlay(squareAnswer){
     let nextHistory = [...history.slice(0, currentMove + 1), squareAnswer]
@@ -125,10 +135,11 @@ export default function Game() {
     
     return (
       <li key={index}>
-        <button onClick={() => jumpTo(index)}>{desc}</button>
+        <button className="move-btn" onClick={() => jumpTo(index)}>{desc}</button>
       </li>
     )
   })
+
 
   return(
     <Fragment>
@@ -149,23 +160,43 @@ export default function Game() {
           <p>
             If you forget who's turn it is, just look above the board and we'll tell you!
           </p>
+          <p>
+            The turn list lets you know who went when, but you can also click on the buttons to go back to a previous move! Be aware that once you click on a button and then click on the board, the other turns after that one get removed and the new turn is added to the list. 
+          </p>
         </div>
 
         <div className="game">
           <h2>The Game</h2>
-          <div className="game-board">
-            <Board history={history} player={player} square={currSquare} onPlay={handlePlay} />
+          <div className="game-components">
+            <div className="game-board">
+                <Status history={history} player={player} square={currSquare}/>
+                <Board history={history} player={player} square={currSquare} status={status} onPlay={handlePlay} />
+                  <button className='reset' onClick={() => {
+                    jumpTo(0)
+                    setHistory([Array(9).fill(null)])
+                  }}>Reset Board</button>
+            </div>
 
-              <button className='reset' onClick={() => {
-                jumpTo(0)
-                setHistory([Array(9).fill(null)])
-              }
-            }>Reset Board</button>
-          </div>
+            <div className="turn-list">
+              <div className="title-div">
+                <div className="turn-title">Turn List</div>
+              </div>
 
-          <div className="turn-list">
-            <div>Turn List</div>
-            <ol>{moves}</ol>
+              {/* <div className="move-lists"> */}
+                <ol className="left-moves">
+                  {moves.filter((item, index) => {
+                  return index <= 5
+                    })
+                  }
+                </ol>
+                <ol start="6" className="right-moves">
+                  {moves.filter((item, index) => {
+                  return index > 5
+                    })
+                  }
+                </ol>
+              {/* </div> */}
+            </div>
           </div>
 
         </div>
