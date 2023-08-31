@@ -1,4 +1,5 @@
 import React, {Fragment, useState} from "react";
+import calcWinner from "./calcWinner";
 
 function Square({value, handleClick}) {
   return (
@@ -6,39 +7,9 @@ function Square({value, handleClick}) {
     )
 }
 
-let calcWinner = (history, square) => {
-  let winLines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-
-  for(let i = 0; i < winLines.length; i++){
-    let [a, b, c] = winLines[i]
-    console.log(`abc squares:`, `${a}: ${square[a]}, ${b}: ${square[b]}, ${c}: ${square[c]}`)
-    console.log(`winlines[i]:`, winLines[i])
-
-    if(square[a] && square[a] === square[b] && square[b] === square[c]){
-      console.log(`in calcWinner:`, square[a])
-      return square[a]
-    }
-    else if (history[9] && history[9].find(el => el === null) === undefined){
-      return "tie"
-    }
-  }
-
-  return null
-}
-
-function Status({history, player, square}){
+ function Status({history, player, square}){
   let status
   let winner = calcWinner(history, square)
-  console.log(`Winner:`, winner)
 
   if(winner === null){
     status = `Player ` + (player ? 'X' : 'O') + `'s turn`
@@ -168,34 +139,32 @@ export default function Game() {
         <div className="game">
           <h2>The Game</h2>
           <div className="game-components">
+            
             <div className="game-board">
-                <Status history={history} player={player} square={currSquare}/>
-                <Board history={history} player={player} square={currSquare} status={status} onPlay={handlePlay} />
-                  <button className='reset' onClick={() => {
-                    jumpTo(0)
-                    setHistory([Array(9).fill(null)])
-                  }}>Reset Board</button>
+              <Status history={history} player={player} square={currSquare}/>
+              <Board history={history} player={player} square={currSquare} status={status} onPlay={handlePlay} />
+              <button className='reset' onClick={() => {
+                 jumpTo(0)
+                setHistory([Array(9).fill(null)])
+              }}>Reset Board</button>
             </div>
 
             <div className="turn-list">
               <div className="title-div">
                 <div className="turn-title">Turn List</div>
               </div>
-
-              {/* <div className="move-lists"> */}
-                <ol className="left-moves">
-                  {moves.filter((item, index) => {
-                  return index <= 5
-                    })
-                  }
-                </ol>
-                <ol start="6" className="right-moves">
-                  {moves.filter((item, index) => {
-                  return index > 5
-                    })
-                  }
-                </ol>
-              {/* </div> */}
+              <ol className="left-moves">
+                {moves.filter((item, index) => {
+                return index <= 5
+                  })
+                }
+              </ol>
+              <ol start="6" className="right-moves">
+                {moves.filter((item, index) => {
+                return index > 5
+                  })
+                }
+              </ol>
             </div>
           </div>
 
