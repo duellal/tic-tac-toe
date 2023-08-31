@@ -14,7 +14,6 @@ export default function calcWinner(history, square) {
       let [a, b, c] = winLines[i]
   
       if(square[a] && square[a] === square[b] && square[b] === square[c]){
-        console.log(`in calcWinner:`, square[a])
         return square[a]
       }
     }
