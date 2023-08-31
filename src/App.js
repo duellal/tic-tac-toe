@@ -101,7 +101,7 @@ export default function Game() {
       }
     }
     else{
-      return
+      return null
     }
     
     return (
